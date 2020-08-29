@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
-import FormInput from '../helpers/form-input/form-input.component';
-import CustomButton from '../helpers/custom-button/custom-button.component';
-import UserDetailContext from '../helpers/contexts/user-detail.contexts';
+import FormInput from '../../helpers/form-input/form-input.component';
+import CustomButton from '../../helpers/custom-button/custom-button.component';
+import UserDetailContext from '../../helpers/contexts/user-detail.contexts';
 
 import './loginAndSignUp.styles.css';
 
@@ -32,12 +32,7 @@ function SignUpPage() {
             const signUpResponseJson = await signUpResponse.json();
             console.log(signUpResponseJson);
             userLogger(signUpResponseJson.user)
-            // if (signUpResponseJson) {
-            //     localStorage.clear();
-            //     localStorage.setItem('currentUser', JSON.stringify(signUpResponseJson.user));
-            //     localStorage.setItem('userWalletDetails', JSON.stringify(signUpResponseJson.walletDetails));
-            // }
-            // console.log(localStorage.getItem('currentUser'));
+            
         } catch (error) {
             const err = new Error('Not able to sign up, try again later', 500);
             return err;

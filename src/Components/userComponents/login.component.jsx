@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
-import FormInput from '../helpers/form-input/form-input.component';
-import CustomButton from '../helpers/custom-button/custom-button.component';
-import UserDetailContext from '../helpers/contexts/user-detail.contexts';
+import FormInput from '../../helpers/form-input/form-input.component';
+import CustomButton from '../../helpers/custom-button/custom-button.component';
+import UserDetailContext from '../../helpers/contexts/user-detail.contexts';
 
 function LoginPage() {
     const { userLogger } = useContext(UserDetailContext);
