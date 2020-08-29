@@ -1,9 +1,8 @@
-import { createContext } from 'react';
-
+import { createContext } from "react"
 
 const AllStocksContext = createContext({
-    stock: {},
-    userWalletDetails: {}
-});
+  stock: {},
+  userWalletDetails: {},
+})
 
-export default AllStocksContext;
+export default AllStocksContext

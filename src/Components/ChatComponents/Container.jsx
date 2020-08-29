@@ -1,6 +1,10 @@
-import React from "react";
-import Chat from "./Chat";
-import { ConnectionConsumer, ChannelConsumer} from '../stockComponents/play-page.components';
+import React from "react"
+import Chat from "./Chat"
+import {
+  ConnectionConsumer,
+  ChannelConsumer,
+} from "../stockComponents/play-page.components"
+
 const Container = () => {
   return (
     <ConnectionConsumer>
@@ -17,6 +21,6 @@ const Container = () => {
         </ChannelConsumer>
       )}
     </ConnectionConsumer>
-  );
-};
-export default Container;
+  )
+}
+export default Container
