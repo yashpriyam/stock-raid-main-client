@@ -32,7 +32,7 @@ const Chat = ({ connection, updateConnection, channel, updateChannel }) => {
   
 
   useEffect(() => {
-    webSocket.current = new WebSocket('ws://localhost:9000/');
+    webSocket.current = new WebSocket('ws://stock-raid-chat-server.herokuapp.com/');
     webSocket.current.onmessage = msg => {
       const data = JSON.parse(msg.data);
       setSocketMessages(prev => [...prev, data]);
