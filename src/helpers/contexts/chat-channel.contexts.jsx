@@ -1,9 +1,8 @@
-import { createContext } from 'react';
-
+import { createContext } from "react"
 
 const ChannelContext = createContext({
-    channel: null,
-    updateChannel: () => {}
-});
+  channel: null,
+  updateChannel: () => {},
+})
 
-export default ChannelContext;
+export default ChannelContext

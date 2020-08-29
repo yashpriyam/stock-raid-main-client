@@ -1,9 +1,8 @@
-import { createContext } from 'react';
-
+import { createContext } from "react"
 
 const ConnectionContext = createContext({
-    connection: null,
-    updateConnection: () => {}
-});
+  connection: null,
+  updateConnection: () => {},
+})
 
-export default ConnectionContext;
+export default ConnectionContext
