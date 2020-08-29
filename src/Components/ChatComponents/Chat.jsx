@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { format } from "date-fns";
 import UsersList from "./UsersList";
 import MessageBox from "./MessageBox";
+import FormInput from '../../helpers/form-input/form-input.component';
+import CustomButton from '../../helpers/custom-button/custom-button.component';
 import "../../App.css";
 
 
@@ -237,17 +239,17 @@ const Chat = ({ connection, updateConnection, channel, updateChannel }) => {
             <div>
               {(!isLoggedIn && (
                 <>
-                  <input 
+                  <FormInput 
                   disabled={loggingIn}
                   type="text"
                   onChange={e => setName(e.target.value)}
                   placeholder="Username"/>
-                  <button
+                  <CustomButton
                     disabled={!name || loggingIn}
                     onClick={handleLogin}
                   >
                     Login
-                  </button>
+                  </CustomButton>
                 </>
               )) || (
                 <div >
