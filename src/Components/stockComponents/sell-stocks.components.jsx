@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import CustomButton from '../helpers/custom-button/custom-button.component';
-import UserStocksContext from '../helpers/contexts/user-stocks.contexts';
+import CustomButton from '../../helpers/custom-button/custom-button.component';
+import UserStocksContext from '../../helpers/contexts/user-stocks.contexts';
 
 const SellStock = (props) => {
     
@@ -49,10 +49,6 @@ const SellStock = (props) => {
             });
             console.log('purchase handler3');
             console.log(stockUpdate);
-            
-            // const stockUpdateJson = await stockUpdate.json();
-            // console.log(stockUpdateJson);
-            // console.log(numberOfStocksToSell);
             
             const userStocks = await fetch(`https://stock-raid-basic-server.herokuapp.com/api/userStocks/${userStock.id}`, {
                 method: 'PATCH',

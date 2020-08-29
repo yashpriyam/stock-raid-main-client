@@ -2,14 +2,14 @@ import React, { useState, useEffect, useContext } from 'react';
 import StockCard from '../stockCards/stock-cards.components';
 import UserStocks from '../userStocks/user-stocks.components';
 import Container from '../chatComponents/Container';
-import AllStocksContext from '../helpers/contexts/stock-detail.contexts';
-import UserStocksContext from '../helpers/contexts/user-stocks.contexts';
-import UserDetailContext from '../helpers/contexts/user-detail.contexts';
-import ChannelContext from '../helpers/contexts/chat-channel.contexts';
-import ConnectionContext from '../helpers/contexts/chat-connection.contexts';
+import AllStocksContext from '../../helpers/contexts/stock-detail.contexts';
+import UserStocksContext from '../../helpers/contexts/user-stocks.contexts';
+import UserDetailContext from '../../helpers/contexts/user-detail.contexts';
+import ChannelContext from '../../helpers/contexts/chat-channel.contexts';
+import ConnectionContext from '../../helpers/contexts/chat-connection.contexts';
 import Wallet from '../wallet/wallet.component';
-import FormInput from '../helpers/form-input/form-input.component';
-import CustomButton from '../helpers/custom-button/custom-button.component';
+import FormInput from '../../helpers/form-input/form-input.component';
+import CustomButton from '../../helpers/custom-button/custom-button.component';
 
 
 function PlayPage() {
