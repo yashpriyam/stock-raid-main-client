@@ -4,6 +4,7 @@ import ReactHighcharts from 'react-highcharts'
 import moment from 'moment'
 
 const Chart = (props) => {
+  const { priceData } = props
     const options = {style: 'currency', currency: 'USD'};
     const numberFormat = new Intl.NumberFormat('en-US', options);
     const configPrice = {
@@ -103,4 +104,4 @@ const Chart = (props) => {
     )
 }
 
-export default Chart
+export default Chart;
