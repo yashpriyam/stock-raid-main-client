@@ -81,6 +81,10 @@ function PlayPage() {
     currentUserStocks()
     getUserWallet()
   }, [userDetails.email])
+  const signOut = () => {
+    setUserDetails({});
+    localStorage.clear();
+  }
   const onAllStockSearchChange = (event) => {
     setAllStockSearchField(event.target.value)
   }
@@ -102,40 +106,37 @@ function PlayPage() {
   )
 
   return (
-    <>
     <div class='main'>
         <div id='header'>
-          <CustomButton onClick={() => setUserDetails({})}>Sign Out</CustomButton>
-        <AllStocksContext.Provider
-          value={{
-            userWalletDetails,
-          }}
-        >
-          <Wallet />
-        </AllStocksContext.Provider>
-        </div>
-        <h2>Start with Stocks</h2>
-        <FormInput
-          value={allStockSearchField}
-          label="Search Stocks To Buy"
-          onChange={onAllStockSearchChange}
-        />
-        {filteredStockList.map((stock) => (
+          <CustomButton onClick={signOut}>Sign Out</CustomButton>
           <AllStocksContext.Provider
             value={{
-              stock,
               userWalletDetails,
             }}
           >
-            <div id='stock-cards'>
-              <div className="inside-stocks">
-                <StockCard key={stock.id} />
-              </div>
-            </div>
+            <Wallet />
           </AllStocksContext.Provider>
-        ))}
-      
-      <div>
+        </div>
+          <FormInput
+            value={allStockSearchField}
+            label="Search Stocks To Buy"
+            onChange={onAllStockSearchChange}
+          />
+          {filteredStockList.map((stock) => (
+            <AllStocksContext.Provider
+              value={{
+                stock,
+                userWalletDetails,
+              }}
+            >
+              <div className='stock-cards'>
+                <h2>Start with Stocks</h2>
+                <div className="inside-stocks">
+                  <StockCard key={stock.id} />
+                </div>
+              </div>
+            </AllStocksContext.Provider>
+          ))}
         <FormInput
           value={userStockSearchField}
           label="Search Stocks To Sell"
@@ -148,12 +149,15 @@ function PlayPage() {
               userWalletDetails,
               stockList,
             }}
-          >
-            <div className='user-stocks'>
-              <UserStocks key={userStock.id} />
-            </div>
+          > 
+          <div className='user-stocks'>
+              <div className='inside-user-stocks'>
+                <UserStocks key={userStock.id} />
+              </div>
+          </div>
           </UserStocksContext.Provider>
         ))}
+        
         <div id='side-chat'>
           <ConnectionContext.Provider value={{ connection, updateConnection }}>
             <ChannelContext.Provider value={{ channel, updateChannel }}>
@@ -161,9 +165,7 @@ function PlayPage() {
             </ChannelContext.Provider>
           </ConnectionContext.Provider>
         </div>
-      </div>
     </div>
-    </>
   )
 }
 

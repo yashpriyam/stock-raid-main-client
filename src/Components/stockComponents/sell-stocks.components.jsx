@@ -15,14 +15,6 @@ const SellStock = (props) => {
   const updatedPerSharePrice =
     (stockBeingSold[0].pershareprice * stockBeingSold[0].availablestocks) /
     (stockBeingSold[0].totalstocks - Number(numberOfStocksToSell))
-  console.log(updatedPerSharePrice)
-  console.log(stockBeingSold[0].pershareprice)
-  console.log(stockBeingSold[0].availablestocks)
-  console.log(stockBeingSold[0].totalstocks)
-  console.log(Number(numberOfStocksToSell))
-  console.log(stockBeingSold[0].pershareprice)
-
-  // console.log(stockBeingSold[0].stockname, userWalletDetails.email, stockBeingSold[0].id);
 
   const sellConfirm = async (event) => {
     event.preventDefault()
@@ -37,14 +29,13 @@ const SellStock = (props) => {
           },
           body: JSON.stringify({
             walletBalance:
-              userWalletDetails.walletBalance + amountAddedToWallet,
+              (userWalletDetails.walletBalance + amountAddedToWallet).toFixed(2),
           }),
         }
       )
       console.log("purchase handler2")
       const walletUpdateJson = await walletUpdate.json()
       console.log(walletUpdateJson)
-      // console.log(updatedPerSharePrice);
 
       const stockUpdate = await fetch(
         `https://stock-raid-basic-server.herokuapp.com/api/stocks/${stockBeingSold[0].id}`,
@@ -92,10 +83,10 @@ const SellStock = (props) => {
   return (
     <>
       <h3>Stocks being Sold: {numberOfStocksToSell}</h3>
-      <h3>Value of Stocks {amountAddedToWallet}</h3>
+      <h3>Value of Stocks {(amountAddedToWallet).toFixed(2)}</h3>
       <h3>
         Wallet Balance After Sell{" "}
-        {userWalletDetails.walletBalance + amountAddedToWallet}
+        {(userWalletDetails.walletBalance + amountAddedToWallet).toFixed(2)}
       </h3>
       <CustomButton onClick={sellConfirm}>CONFIRM</CustomButton>
       <CustomButton onClick={cancelButton}>CANCEL</CustomButton>

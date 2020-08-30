@@ -23,11 +23,11 @@ function UserStocks() {
   }
 
   return (
-    <div className="user-stock-card-container inside-user-stocks">
+    <div className='user-stock-card-container'>
       <h2>Stocks You Have</h2>
       <div>{stockName}</div>
       <div>{userStock.numberOfStocks}</div>
-      <div>{totalCostOfPurchase}</div>
+      <div>{(totalCostOfPurchase).toFixed(2)}</div>
       <FormInput
         type="number"
         name="stockquantity"
@@ -36,6 +36,8 @@ function UserStocks() {
         onChange={handleChange}
         min={1}
         max={numberOfStocks}
+        step="1"
+        oninput="validity.valid||(value='');"
       />
       <CustomButton onClick={sellStock}>SELL</CustomButton>
       {sellingConfirmation && (

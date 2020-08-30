@@ -24,9 +24,7 @@ const App = () => {
               path='/'
               render={() =>
                 userDetails.hasOwnProperty('email') ? (
-                  <div className='main'>
                     <PlayPage logOut={setUserDetails}/>
-                  </div>
                 ) : (
                   <SignInAndSignUpPage/>
                 )
