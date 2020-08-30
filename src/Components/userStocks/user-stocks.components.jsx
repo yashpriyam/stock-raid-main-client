@@ -23,7 +23,7 @@ function UserStocks() {
   }
 
   return (
-    <div className="user-stock-card-container inside-user-stocks">
+    <div className="user-stock-card-container userStock-card">
       <h2>Stocks You Have</h2>
       <div>{stockName}</div>
       <div>{userStock.numberOfStocks}</div>
