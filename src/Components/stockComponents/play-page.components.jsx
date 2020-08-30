@@ -10,6 +10,7 @@ import ConnectionContext from "../../helpers/contexts/chat-connection.contexts"
 import Wallet from "../wallet/wallet.component"
 import FormInput from "../../helpers/form-input/form-input.component"
 import CustomButton from "../../helpers/custom-button/custom-button.component"
+import '../../App.css'
 
 function PlayPage() {
   const { setUserDetails } = useContext(UserDetailContext)
@@ -102,8 +103,9 @@ function PlayPage() {
 
   return (
     <>
-      <div>
-        <CustomButton onClick={() => setUserDetails({})}>Sign Out</CustomButton>
+    <div class='main'>
+        <div id='header'>
+          <CustomButton onClick={() => setUserDetails({})}>Sign Out</CustomButton>
         <AllStocksContext.Provider
           value={{
             userWalletDetails,
@@ -111,6 +113,7 @@ function PlayPage() {
         >
           <Wallet />
         </AllStocksContext.Provider>
+        </div>
         <h2>Start with Stocks</h2>
         {/* <SearchBox label={'Search Stocks To Buy'} onSearchChange={onSearchChange}/> */}
         <FormInput
@@ -125,10 +128,14 @@ function PlayPage() {
               userWalletDetails,
             }}
           >
-            <StockCard key={stock.id} />
+            <div id='stock-cards'>
+              <div className="inside-stocks">
+                <StockCard key={stock.id} />
+              </div>
+            </div>
           </AllStocksContext.Provider>
         ))}
-      </div>
+      
       <div>
         <FormInput
           value={userStockSearchField}
@@ -143,10 +150,12 @@ function PlayPage() {
               stockList,
             }}
           >
-            <UserStocks key={userStock.id} />
+            <div className='user-stocks'>
+              <UserStocks key={userStock.id} />
+            </div>
           </UserStocksContext.Provider>
         ))}
-        <div>
+        <div id='side-chat'>
           <ConnectionContext.Provider value={{ connection, updateConnection }}>
             <ChannelContext.Provider value={{ channel, updateChannel }}>
               <Container />
@@ -154,6 +163,7 @@ function PlayPage() {
           </ConnectionContext.Provider>
         </div>
       </div>
+    </div>
     </>
   )
 }
