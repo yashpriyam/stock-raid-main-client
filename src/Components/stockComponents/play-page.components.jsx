@@ -112,7 +112,6 @@ function PlayPage() {
           <Wallet />
         </AllStocksContext.Provider>
         <h2>Start with Stocks</h2>
-        {/* <SearchBox label={'Search Stocks To Buy'} onSearchChange={onSearchChange}/> */}
         <FormInput
           value={allStockSearchField}
           label="Search Stocks To Buy"
