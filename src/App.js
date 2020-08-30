@@ -23,13 +23,13 @@ const App = () => {
               exact
               path='/'
               render={() =>
-                // userDetails.hasOwnProperty('email') ? (
+                userDetails.hasOwnProperty('email') ? (
                   <div className='main'>
                     <PlayPage logOut={setUserDetails}/>
                   </div>
-                // ) : (
-                //   <SignInAndSignUpPage/>
-                // )
+                ) : (
+                  <SignInAndSignUpPage/>
+                )
               }
               />
       </UserDetailContext.Provider>
