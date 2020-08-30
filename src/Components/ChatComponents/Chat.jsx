@@ -28,69 +28,6 @@ const Chat = ({ connection, updateConnection, channel, updateChannel }) => {
   const webSocket = useRef(null)
   const messagesRef = useRef({})
 
-  const onAnswer = ({ answer }) => {
-    connection.setRemoteDescription(new RTCSessionDescription(answer))
-  }
-
-  // when we got ice candidate from another user
-  const onCandidate = ({ candidate }) => {
-    connection.addIceCandidate(new RTCIceCandidate(candidate))
-  }
-
-
-  const onLogin = ({ success, message, users: loggedIn }) => {
-    setLoggingIn(false)
-    if (success) {
-      alert("Logged in successfully!")
-      setIsLoggedIn(true)
-      setUsers(loggedIn)
-      const localConnection = new RTCPeerConnection(configuration)
-      // when the browser finds an ice candidate we send it to another peer
-      localConnection.onicecandidate = ({ candidate }) => {
-        const connectedTo = connectedRef.current
-
-        if (candidate && !!connectedTo) {
-          send({
-            name: connectedTo,
-            type: "candidate",
-            candidate,
-          })
-        }
-      }
-      localConnection.ondatachannel = (event) => {
-        console.log("Data channel is created!")
-        const receiveChannel = event.channel
-        receiveChannel.onopen = () => {
-          console.log("Data channel is open and ready to be used.")
-        }
-        receiveChannel.onmessage = handleDataChannelMessageReceived
-        updateChannel(receiveChannel)
-      }
-      updateConnection(localConnection)
-    } else {
-      alert(`${message}`)
-    }
-  }
-
-    // when somebody wants to message us
-    const onOffer = ({ offer, name }) => {
-      setConnectedTo(name)
-      connectedRef.current = name
-  
-      connection
-        .setRemoteDescription(new RTCSessionDescription(offer))
-        .then(() => connection.createAnswer())
-        .then((answer) => connection.setLocalDescription(answer))
-        .then(() =>
-          send({ type: "answer", answer: connection.localDescription, name })
-        )
-        .catch((e) => {
-          console.log({ e })
-          alert("An error has occurred.")
-        })
-    }
-
-  
   useEffect(() => {
     webSocket.current = new WebSocket(
       "wss://stock-raid-chat-server.herokuapp.com/"
@@ -173,12 +110,67 @@ const Chat = ({ connection, updateConnection, channel, updateChannel }) => {
     }
   }
 
+  const onLogin = ({ success, message, users: loggedIn }) => {
+    setLoggingIn(false)
+    if (success) {
+      alert("Logged in successfully!")
+      setIsLoggedIn(true)
+      setUsers(loggedIn)
+      const localConnection = new RTCPeerConnection(configuration)
+      // when the browser finds an ice candidate we send it to another peer
+      localConnection.onicecandidate = ({ candidate }) => {
+        const connectedTo = connectedRef.current
 
+        if (candidate && !!connectedTo) {
+          send({
+            name: connectedTo,
+            type: "candidate",
+            candidate,
+          })
+        }
+      }
+      localConnection.ondatachannel = (event) => {
+        console.log("Data channel is created!")
+        const receiveChannel = event.channel
+        receiveChannel.onopen = () => {
+          console.log("Data channel is open and ready to be used.")
+        }
+        receiveChannel.onmessage = handleDataChannelMessageReceived
+        updateChannel(receiveChannel)
+      }
+      updateConnection(localConnection)
+    } else {
+      alert(`${message}`)
+    }
+  }
 
+  // when somebody wants to message us
+  const onOffer = ({ offer, name }) => {
+    setConnectedTo(name)
+    connectedRef.current = name
 
+    connection
+      .setRemoteDescription(new RTCSessionDescription(offer))
+      .then(() => connection.createAnswer())
+      .then((answer) => connection.setLocalDescription(answer))
+      .then(() =>
+        send({ type: "answer", answer: connection.localDescription, name })
+      )
+      .catch((e) => {
+        console.log({ e })
+        alert("An error has occurred.")
+      })
+  }
 
   // when another user answers to our offer
+  const onAnswer = ({ answer }) => {
+    connection.setRemoteDescription(new RTCSessionDescription(answer))
+  }
 
+  // when we got ice candidate from another user
+  const onCandidate = ({ candidate }) => {
+    connection.addIceCandidate(new RTCIceCandidate(candidate))
+  }
 
   // when a user clicks the send message button
   const sendMsg = () => {
