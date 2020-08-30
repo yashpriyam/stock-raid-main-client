@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react"
 import FormInput from "../../helpers/form-input/form-input.component"
 import CustomButton from "../../helpers/custom-button/custom-button.component"
 import UserDetailContext from "../../helpers/contexts/user-detail.contexts"
+import "./loginAndSignUp.styles.css"
 
 function LoginPage() {
   const { userLogger } = useContext(UserDetailContext)
@@ -9,7 +10,7 @@ function LoginPage() {
     email: "",
     password: "",
   })
-  const { email, password } = userCredentials
+  const { email, password } = userCredentials;
   console.log(email, password)
   const handleChange = (event) => {
     const { value, name } = event.target
@@ -41,7 +42,7 @@ function LoginPage() {
   }
 
   return (
-    <>
+    <div className="sign-in-and-sign-up">
       <h3>Login</h3>
       <form onSubmit={loginHandler}>
         <FormInput
@@ -60,7 +61,7 @@ function LoginPage() {
         />
         <CustomButton type="submit">LOG IN</CustomButton>
       </form>
-    </>
+      </div>
   )
 }
 

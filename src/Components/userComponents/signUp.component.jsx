@@ -12,7 +12,7 @@ function SignUpPage() {
     email: "",
     password: "",
   })
-  const { username, email, password } = userCredentials
+  const { username, email, password } = userCredentials;
 
   const handleChange = (event) => {
     const { value, name } = event.target
