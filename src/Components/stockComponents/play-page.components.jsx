@@ -115,7 +115,6 @@ function PlayPage() {
         </AllStocksContext.Provider>
         </div>
         <h2>Start with Stocks</h2>
-        {/* <SearchBox label={'Search Stocks To Buy'} onSearchChange={onSearchChange}/> */}
         <FormInput
           value={allStockSearchField}
           label="Search Stocks To Buy"
