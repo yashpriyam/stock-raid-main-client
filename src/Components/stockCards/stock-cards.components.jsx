@@ -1,14 +1,16 @@
 import React, { useState, useContext } from "react"
+import moment from 'moment'
 import AllStocksContext from "../../helpers/contexts/stock-detail.contexts"
 import BuyStocks from "../stockComponents/buy-stocks.components"
 import FormInput from "../../helpers/form-input/form-input.component"
 import CustomButton from "../../helpers/custom-button/custom-button.component"
-import Modal from '../../helpers/modal/modal.component';
+import Chart from '../charts/chart'
+// import Modal from '../../helpers/modal/modal.component';
 import "./stock-cards.styles.css"
 
 function StockCard() {
   const { stock, userWalletDetails } = useContext(AllStocksContext)
-  const { stockname, stocksymbol, pershareprice } = stock
+  const { stockname, stocksymbol, pershareprice, lastPrices } = stock
   const value = Number(pershareprice).toFixed(2);
   const [numberOfStocks, setNumberOfStocks] = useState("")
   const [isPurchaseAble, setIsPurchaseAble] = useState(false)
@@ -19,7 +21,6 @@ function StockCard() {
     setNumberOfStocks(Number(value))
   }
 
-  let message;
   const buyStockFunction = () => {
     setCurrentWalletBalance(Number(userWalletDetails.walletBalance))
     setTotalCostOfPurchase(Number(pershareprice) * Number(numberOfStocks))
@@ -39,11 +40,19 @@ function StockCard() {
     setNumberOfStocks("")
   }
 
+  const priceDataArray = lastPrices.map(eachTransaction => {
+    const unixTimeStamp = moment.unix(eachTransaction.unixTime);
+    const price = eachTransaction.price;
+    return [unixTimeStamp, price];
+  })
+
+
   return (
     <div className="card-container">
       <h3>{stockname}</h3>
       <h4>{stocksymbol}</h4>
       <h4>${value}</h4>
+      <Chart priceData={priceDataArray}/>
       <FormInput
         type="number"
         name="stockquantity"
