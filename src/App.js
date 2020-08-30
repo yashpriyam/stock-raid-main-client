@@ -1,26 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import PlayPage from './Components/stockComponents/play-page.components';
+import UserDetailContext from './helpers/contexts/user-detail.contexts';
+import SignInAndSignUpPage from './Components/userComponents/loginAndSignUp.component';
+import './App.css'
 
-function App() {
+const App = () => {
+  const [userDetails, setUserDetails] = useState({})
+  const userLogger = (userCredentials) => setUserDetails(userCredentials);
+  console.log(userDetails);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <>
+    <div className='grid-container'>
+    <BrowserRouter>
+    <Switch>
+    <UserDetailContext.Provider value={{
+        userDetails,
+        userLogger,
+        setUserDetails
+    }}>
+        <Route
+              exact
+              path='/'
+              render={() =>
+                userDetails.hasOwnProperty('email') ? (
+                    <PlayPage logOut={setUserDetails}/>
+                ) : (
+                  <SignInAndSignUpPage/>
+                )
+              }
+              />
+      </UserDetailContext.Provider>
+      </Switch>
+      </BrowserRouter>
     </div>
+    </>
   );
-}
+};
 
 export default App;

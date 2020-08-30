@@ -1,0 +1,9 @@
+.card-container {
+    background: white;
+    border: 1px solid #ccc;
+    box-shadow: -2rem 2rem 2rem rgba(0, 0, 0, 0.2);
+  }
+  
+  .card-container:hover {
+    transform: scale(1.05);
+  }
