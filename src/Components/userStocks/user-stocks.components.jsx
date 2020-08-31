@@ -24,7 +24,6 @@ function UserStocks() {
 
   return (
     <div className='user-stock-card-container'>
-      <h2>Stocks You Have</h2>
       <div>{stockName}</div>
       <div>{userStock.numberOfStocks}</div>
       <div>{(totalCostOfPurchase).toFixed(2)}</div>
