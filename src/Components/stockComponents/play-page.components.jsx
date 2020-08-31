@@ -63,7 +63,7 @@ function PlayPage() {
     const getUserWallet = async () => {
       try {
         const userWallet = new EventSource(
-          `http://localhost:5001/api/wallet/${userDetails.email}`
+          `https://stock-raid-basic-server.herokuapp.com/api/wallet/${userDetails.email}`
         )
         userWallet.onmessage = (e) => {
           const userWalletJson = JSON.parse(e.data)

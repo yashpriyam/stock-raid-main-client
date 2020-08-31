@@ -27,11 +27,13 @@ function Wallet() {
     setMoreMoneyNeeded(false)
   }
 
-  const priceDataArray = lastBalances.map(eachTransaction => {
-    const unixTimeStamp = moment.unix(eachTransaction.unixTime);
-    const balance = eachTransaction.balance;
-    return [unixTimeStamp, balance];
-  })
+  // const priceDataArray = lastBalances.map(eachTransaction => {
+  //   const unixTimeStamp = moment.unix(eachTransaction.unixTime);
+  //   const balance = eachTransaction.balance;
+  //   return [unixTimeStamp, balance];
+  // })
+
+  const priceDataArray = [];
 
   return (
     <div className={`wallet-container wallet `}>

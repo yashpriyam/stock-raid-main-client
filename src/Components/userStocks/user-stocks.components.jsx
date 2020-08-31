@@ -35,8 +35,6 @@ function UserStocks() {
         onChange={handleChange}
         min={1}
         max={numberOfStocks}
-        step="1"
-        oninput="validity.valid||(value='');"
       />
       <CustomButton onClick={sellStock}>SELL</CustomButton>
       {sellingConfirmation && (
