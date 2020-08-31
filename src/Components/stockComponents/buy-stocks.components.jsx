@@ -14,9 +14,7 @@ const BuyStocks = (props) => {
     (stock.pershareprice * stock.availablestocks) /
     (stock.totalstocks - Number(numberOfStocks))
   const { userDetails } = useContext(UserDetailContext)
-  console.log(userDetails)
 
-  // console.log(userDetails, stock);
   const purchaseHandler = async (event) => {
     event.preventDefault()
     console.log("purchase handler")
@@ -78,25 +76,20 @@ const BuyStocks = (props) => {
       return err
     }
   }
-  const cancelButton = () => {
-    cancelTransaction()
-  }
+
   return (
     <>
       <div>
-        <h2>{`Your current wallet balance: ${currentWalletBalance.toFixed(
-          2
-        )}`}</h2>
+        <h2>{`Your current wallet balance: ${currentWalletBalance.toFixed(2)}`}</h2>
         <h2>{`Cost of this Purchase: $${totalCostOfPurchase.toFixed(2)}`}</h2>
         <h2>{`Wallet Balance after this transaction: $${(
           currentWalletBalance - totalCostOfPurchase
         ).toFixed(2)}`}</h2>
         <h3>
-          Click <h4>CONFIRM</h4> if you you wish to continue
+          Click CONFIRM if you you wish to continue
         </h3>
       </div>
       <CustomButton onClick={purchaseHandler}>CONFIRM</CustomButton>
-      <CustomButton onClick={cancelButton}>CANCEL</CustomButton>
     </>
   )
 }

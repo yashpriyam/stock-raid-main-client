@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react"
+import React, { useState, useContext, useEffect } from "react"
 import moment from 'moment'
 import AllStocksContext from "../../helpers/contexts/stock-detail.contexts"
 import BuyStocks from "../stockComponents/buy-stocks.components"
@@ -16,6 +16,9 @@ function StockCard() {
   const [isPurchaseAble, setIsPurchaseAble] = useState(false)
   const [currentWalletBalance, setCurrentWalletBalance] = useState("")
   const [totalCostOfPurchase, setTotalCostOfPurchase] = useState(0)
+  const [chartVisible, setChartVisible] = useState(false)
+  const [chartButtonTitle, setChartButtonTitle] = useState('OPEN CHART');
+  const [buyButtonTitle, setBuyButtonTitle] = useState('BUY');
   const handleChange = (event) => {
     const { value } = event.target
     setNumberOfStocks(Number(value))
@@ -24,21 +27,31 @@ function StockCard() {
   const buyStockFunction = () => {
     setCurrentWalletBalance(Number(userWalletDetails.walletBalance))
     setTotalCostOfPurchase(Number(pershareprice) * Number(numberOfStocks))
-    setTimeout(() => {
-      if (Number(currentWalletBalance).toFixed(2) < Number(totalCostOfPurchase).toFixed(2)) {
-        return alert(`You dont have enough balance in your wallet to make this transaction \n\n
-        add ${
-          totalCostOfPurchase - userWalletDetails.walletBalance
-        } more to your wallet to do this transaction`);
-      } else {
-        setIsPurchaseAble(true);
-      }
-    }, 0)
+    if (Number(currentWalletBalance).toFixed(2) < Number(totalCostOfPurchase).toFixed(2)) {
+      return alert(`You dont have enough balance in your wallet to make this transaction \n\n
+      add ${
+        totalCostOfPurchase - userWalletDetails.walletBalance
+      } more to your wallet to do this transaction`);
+    } else {
+      setIsPurchaseAble(!isPurchaseAble);
+    }
   }
+
+  useEffect(() => {
+    isPurchaseAble ? setBuyButtonTitle('CANCEL') : setBuyButtonTitle('BUY') && setNumberOfStocks("")
+  }, [isPurchaseAble])
+  
   const cancelTransaction = () => {
     setIsPurchaseAble(false)
     setNumberOfStocks("")
   }
+
+  const seeChart = () => {
+    setChartVisible(!chartVisible);
+  }
+  useEffect(() => {
+    chartVisible === true ? setChartButtonTitle('CLOSE CHART') : setChartButtonTitle('OPEN CHART')
+  }, [chartVisible])
 
   const priceDataArray = lastPrices.map(eachTransaction => {
     const unixTimeStamp = moment.unix(eachTransaction.unixTime);
@@ -52,7 +65,8 @@ function StockCard() {
       <h3>{stockname}</h3>
       <h4>{stocksymbol}</h4>
       <h4>${value}</h4>
-      <Chart priceData={priceDataArray}/>
+      <CustomButton onClick={seeChart}>{chartButtonTitle}</CustomButton>
+      {chartVisible && <Chart stockname={stockname} priceData={priceDataArray}/>}
       <FormInput
         type="number"
         name="stockquantity"
@@ -60,7 +74,7 @@ function StockCard() {
         value={numberOfStocks}
         onChange={handleChange}
       />
-      <CustomButton onClick={buyStockFunction}>BUY</CustomButton>
+      <CustomButton onClick={buyStockFunction}>{buyButtonTitle}</CustomButton>
       {isPurchaseAble && 
         <BuyStocks
           stock={stock}

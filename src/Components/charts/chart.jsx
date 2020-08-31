@@ -4,7 +4,7 @@ import ReactHighcharts from 'react-highcharts'
 import moment from 'moment'
 
 const Chart = (props) => {
-  const { priceData } = props
+  const { priceData, stockname } = props
     const options = {style: 'currency', currency: 'USD'};
     const numberFormat = new Intl.NumberFormat('en-US', options);
     const configPrice = {
@@ -45,7 +45,7 @@ const Chart = (props) => {
         selected: 1
       },
       title: {
-        text: `Bitcoin stock price`
+        text: `${stockname} Price Changes`
       },
       chart: {
         height: 600,

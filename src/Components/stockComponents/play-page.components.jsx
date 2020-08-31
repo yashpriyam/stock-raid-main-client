@@ -51,7 +51,6 @@ function PlayPage() {
           `https://stock-raid-basic-server.herokuapp.com/api/userstocks/${userDetails.email}`
         )
         userStocksData.onmessage = (e) => {
-          // console.log(JSON.parse(e.data));
           const userStocksJson = JSON.parse(e.data)
           console.log(userStocksJson.userStocks)
           setUserStocksList(userStocksJson.userStocks)
@@ -106,17 +105,21 @@ function PlayPage() {
   )
 
   return (
-    <div class='main'>
-        <div id='header'>
-          <CustomButton onClick={signOut}>Sign Out</CustomButton>
+    <div className='main'>
+        
+          <CustomButton className='header' onClick={signOut}>Sign Out</CustomButton>
           <AllStocksContext.Provider
             value={{
               userWalletDetails,
             }}
           >
+            <div className='header'>
             <Wallet />
+            </div>
           </AllStocksContext.Provider>
-        </div>
+        {/* </div> */}
+        <div className='stock-cards'>
+          <h2>BUY STOCKS</h2>
           <FormInput
             value={allStockSearchField}
             label="Search Stocks To Buy"
@@ -129,35 +132,34 @@ function PlayPage() {
                 userWalletDetails,
               }}
             >
-              <div className='stock-cards'>
-                <h2>Start with Stocks</h2>
                 <div className="inside-stocks">
                   <StockCard key={stock.id} />
                 </div>
-              </div>
             </AllStocksContext.Provider>
           ))}
-        <FormInput
-          value={userStockSearchField}
-          label="Search Stocks To Sell"
-          onChange={onUserStockSearchChange}
-        />
-        {filteredUserStocksList.map((userStock) => (
-          <UserStocksContext.Provider
-            value={{
-              userStock,
-              userWalletDetails,
-              stockList,
-            }}
-          > 
-          <div className='user-stocks'>
-              <div className='inside-user-stocks'>
-                <UserStocks key={userStock.id} />
-              </div>
-          </div>
-          </UserStocksContext.Provider>
-        ))}
-        
+        </div>
+        <div className='user-stocks'>
+          <h2>Stocks You Have</h2>
+          <FormInput
+            value={userStockSearchField}
+            label="Search Stocks To Sell"
+            onChange={onUserStockSearchChange}
+          />
+          {filteredUserStocksList.map((userStock) => (
+            <UserStocksContext.Provider
+              value={{
+                userStock,
+                userWalletDetails,
+                stockList,
+              }}
+            >
+            
+                <div className='inside-user-stocks'>
+                  <UserStocks key={userStock.id} />
+                </div>
+            </UserStocksContext.Provider>
+          ))}
+        </div>
         <div id='side-chat'>
           <ConnectionContext.Provider value={{ connection, updateConnection }}>
             <ChannelContext.Provider value={{ channel, updateChannel }}>
