@@ -16,7 +16,7 @@ const SellStock = (props) => {
 
   const sellConfirm = async (event) => {
     event.preventDefault()
-    console.log("purchase handler")
+    // // console.log("purchase handler")
     try {
       const walletUpdate = await fetch(
         `https://stock-raid-basic-server.herokuapp.com/api/wallet/${userWalletDetails.email}`,
@@ -31,9 +31,9 @@ const SellStock = (props) => {
           }),
         }
       )
-      console.log("purchase handler2")
+      // console.log("purchase handler2")
       const walletUpdateJson = await walletUpdate.json()
-      console.log(walletUpdateJson)
+      // console.log(walletUpdateJson)
 
       const stockUpdate = await fetch(
         `https://stock-raid-basic-server.herokuapp.com/api/stocks/${stockBeingSold[0].id}`,
@@ -50,8 +50,8 @@ const SellStock = (props) => {
           }),
         }
       )
-      console.log("purchase handler3")
-      console.log(stockUpdate)
+      // console.log("purchase handler3")
+      // console.log(stockUpdate)
 
       const userStocks = await fetch(
         `https://stock-raid-basic-server.herokuapp.com/api/userStocks/${userStock.id}`,
@@ -66,10 +66,10 @@ const SellStock = (props) => {
           }),
         }
       )
-      console.log("pur hand 4")
+      // console.log("pur hand 4")
       const userStocksJson = await userStocks.json()
       await cancelSell()
-      console.log(userStocksJson)
+      // console.log(userStocksJson)
     } catch (error) {
       const err = new Error("Transaction failed", 500)
       return err

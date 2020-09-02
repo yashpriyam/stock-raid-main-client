@@ -25,7 +25,7 @@ const MoneyAdder = (props) => {
       }
       try {
         const walletUpdate = await fetch(
-          `http://localhost:5001/api/wallet/${userWalletDetails.email}`,
+          `https://stock-raid-basic-server.herokuapp.com/api/wallet/${userWalletDetails.email}`,
           {
             method: "PATCH",
             headers: {

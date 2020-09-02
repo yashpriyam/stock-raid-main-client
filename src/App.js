@@ -29,13 +29,13 @@ const App = () => {
   // useEffect runs after the component render runs
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem('userData'));
-    // console.log(storedData);
+    // // console.log(storedData);
     if (storedData && storedData.token) {
       logIn(storedData.userData, storedData.token);
     }
   }, [logIn]);
 
-  console.log(userDetails);
+  // console.log(userDetails);
   
   return (
     <BrowserRouter>
