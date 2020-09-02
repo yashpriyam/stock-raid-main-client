@@ -2,16 +2,18 @@ import React, { useState, useContext } from "react"
 import FormInput from "../../helpers/form-input/form-input.component"
 import CustomButton from "../../helpers/custom-button/custom-button.component"
 import UserDetailContext from "../../helpers/contexts/user-detail.contexts"
-import "./loginAndSignUp.styles.css"
+import "./loginSignup/loginAndSignUp.styles.css"
 
 function LoginPage() {
-  const { userLogger } = useContext(UserDetailContext)
+  const { logIn } = useContext(UserDetailContext)
+  const [errorMessage, seterrorMessage] = useState('')
+  const [error, setError] = useState(false)
   const [userCredentials, setCredentials] = useState({
     email: "",
     password: "",
   })
   const { email, password } = userCredentials;
-  console.log(email, password)
+  // console.log(email, password)
   const handleChange = (event) => {
     const { value, name } = event.target
     setCredentials({ ...userCredentials, [name]: value })
@@ -33,8 +35,13 @@ function LoginPage() {
         }
       )
       const responseData = await response.json()
-      console.log(responseData)
-      userLogger(responseData.user)
+      if (responseData.message) {
+        setError(true)
+        seterrorMessage(responseData.message)
+        return;
+      }
+      // console.log(responseData)
+      logIn(responseData.user, responseData.token);
     } catch (error) {
       const err = new Error("Can not log you in, try again later", 500)
       return err
@@ -42,8 +49,8 @@ function LoginPage() {
   }
 
   return (
-    <div className="sign-in-and-sign-up">
-      <h3>Login</h3>
+    <div className="sign-in">
+      <div className='login-title'>Login</div>
       <form onSubmit={loginHandler}>
         <FormInput
           name="email"
@@ -51,6 +58,7 @@ function LoginPage() {
           label="Email"
           value={email}
           onChange={handleChange}
+          disabled={error}
         />
         <FormInput
           name="password"
@@ -58,8 +66,15 @@ function LoginPage() {
           label="Password"
           value={password}
           onChange={handleChange}
+          disabled={error}
         />
-        <CustomButton type="submit">LOG IN</CustomButton>
+        <CustomButton type="submit" disabled={error}>LOG IN</CustomButton>
+        {error && (
+          <div className='error-container'>
+            <div className='error-msg'>{errorMessage}</div>
+            <CustomButton onClick={() => setError(false)}>Try Again</CustomButton>
+          </div>
+        )}
       </form>
       </div>
   )

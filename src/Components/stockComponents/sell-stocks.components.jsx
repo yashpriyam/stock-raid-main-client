@@ -3,13 +3,11 @@ import CustomButton from "../../helpers/custom-button/custom-button.component"
 import UserStocksContext from "../../helpers/contexts/user-stocks.contexts"
 
 const SellStock = (props) => {
-  const { numberOfStocksToSell, cancelSell } = props
-  const { userStock, userWalletDetails, stockList } = useContext(
+  const { numberOfStocksToSell, cancelSell, stockBeingSold } = props
+  const { userStock, userWalletDetails } = useContext(
     UserStocksContext
   )
-  const stockBeingSold = stockList.filter(
-    (stock) => stock.stockname === userStock.stockName
-  )
+  
   const amountAddedToWallet =
     stockBeingSold[0].pershareprice * numberOfStocksToSell
   const updatedPerSharePrice =
@@ -77,9 +75,6 @@ const SellStock = (props) => {
       return err
     }
   }
-  const cancelButton = () => {
-    cancelSell()
-  }
   return (
     <>
       <h3>Stocks being Sold: {numberOfStocksToSell}</h3>
@@ -89,7 +84,6 @@ const SellStock = (props) => {
         {(userWalletDetails.walletBalance + amountAddedToWallet).toFixed(2)}
       </h3>
       <CustomButton onClick={sellConfirm}>CONFIRM</CustomButton>
-      <CustomButton onClick={cancelButton}>CANCEL</CustomButton>
     </>
   )
 }

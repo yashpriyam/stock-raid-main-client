@@ -8,7 +8,7 @@ const BuyStocks = (props) => {
     totalCostOfPurchase,
     stock,
     numberOfStocks,
-    cancelTransaction,
+    closeModal,
   } = props
   const updatedPerSharePrice =
     (stock.pershareprice * stock.availablestocks) /
@@ -70,7 +70,7 @@ const BuyStocks = (props) => {
       )
       const userStocksJson = await userStocks.json()
       console.log(userStocksJson)
-      await cancelTransaction()
+      await closeModal()
     } catch (error) {
       const err = new Error("Transaction failed", 500)
       return err
