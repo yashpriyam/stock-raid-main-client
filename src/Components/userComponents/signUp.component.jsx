@@ -3,10 +3,12 @@ import FormInput from "../../helpers/form-input/form-input.component"
 import CustomButton from "../../helpers/custom-button/custom-button.component"
 import UserDetailContext from "../../helpers/contexts/user-detail.contexts"
 
-import "./loginAndSignUp.styles.css"
+import "./loginSignup/loginAndSignUp.styles.css"
 
 function SignUpPage() {
-  const { userLogger } = useContext(UserDetailContext)
+  const { logIn } = useContext(UserDetailContext)
+  const [errorMessage, seterrorMessage] = useState('')
+  const [error, setError] = useState(false)
   const [userCredentials, setCredentials] = useState({
     username: "",
     email: "",
@@ -37,16 +39,21 @@ function SignUpPage() {
         }
       )
       const signUpResponseJson = await signUpResponse.json()
-      console.log(signUpResponseJson)
-      userLogger(signUpResponseJson.user)
+      // console.log(signUpResponseJson)
+      if (signUpResponseJson.message) {
+        setError(true)
+        seterrorMessage(signUpResponseJson.message)
+        return;
+      }
+      logIn(signUpResponseJson.user, signUpResponseJson.token)
     } catch (error) {
       const err = new Error("Not able to sign up, try again later", 500)
       return err
     }
   }
   return (
-    <div className="sign-in-and-sign-up">
-      <h3>Sign Up</h3>
+    <div className="sign-up">
+      <div className='login-title'>Sign Up</div>
       <form onSubmit={signUpHandler}>
         <FormInput
           name="username"
@@ -54,6 +61,7 @@ function SignUpPage() {
           label="Name"
           value={username}
           onChange={handleChange}
+          disabled={error}
         />
         <FormInput
           name="email"
@@ -61,6 +69,7 @@ function SignUpPage() {
           label="Email"
           value={email}
           onChange={handleChange}
+          disabled={error}
         />
         <FormInput
           name="password"
@@ -68,8 +77,15 @@ function SignUpPage() {
           label="Password"
           value={password}
           onChange={handleChange}
+          disabled={error}
         />
-        <CustomButton type="submit">SIGN UP</CustomButton>
+        <CustomButton type="submit" disabled={error}>SIGN UP</CustomButton>
+        {error && (
+          <div className='error-container'>
+            <div className='error-msg'>{errorMessage}</div>
+            <CustomButton onClick={() => setError(false)}>Try Again</CustomButton>
+          </div>
+        )}
       </form>
     </div>
   )

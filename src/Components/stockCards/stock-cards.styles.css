@@ -1,9 +1,40 @@
 .card-container {
     background: white;
-    border: 1px solid #ccc;
+    font-weight: bold;
+    border-radius: 15px;
+    margin: 8px;
     box-shadow: -2rem 2rem 2rem rgba(0, 0, 0, 0.2);
+    padding: 16px;
+    background-color: #eee;
+    min-width: 280px;
+    align-items: center;
   }
   
   .card-container:hover {
-    transform: scale(1.05);
+    transform: scale(1.01);
   }
+
+  .buy-stock-container {
+    display: flex;
+    align-items: center;
+  }
+  .profit {
+    color: green;
+  }
+
+  .loss {
+    color: red;
+  }
+
+  .stock-detail-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+  }
+
+  .stock-price-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+  }
+

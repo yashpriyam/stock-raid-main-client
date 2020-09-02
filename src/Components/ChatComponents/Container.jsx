@@ -3,7 +3,7 @@ import Chat from "./Chat"
 import {
   ConnectionConsumer,
   ChannelConsumer,
-} from "../stockComponents/play-page.components"
+} from "../playPage/play-page.components"
 
 const Container = () => {
   return (

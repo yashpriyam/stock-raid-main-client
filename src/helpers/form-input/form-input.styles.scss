@@ -6,13 +6,13 @@ $main-color: black;
   font-size: 14px;
   color: red;
   background-color: white;
-  width: 100%;
+  width: auto;
   transition: 300ms ease all;
 }
 
 .group {
   position: relative;
-  margin: 45px 0;
+  margin: 20px 0;
 
   .form-input {
     background: none;
@@ -21,7 +21,7 @@ $main-color: black;
     font-size: 18px;
     padding: 10px 10px 10px 10px;
     display: grid;
-    width: auto;
+    width: 220px;
     border: none;
     border-radius: 0;
     border-bottom: 1px solid $sub-color;

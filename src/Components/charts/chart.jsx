@@ -1,10 +1,9 @@
 import React from 'react'
 import ReactHighcharts from 'react-highcharts'
-// import priceData from './assets/btcdata.json'
 import moment from 'moment'
 
 const Chart = (props) => {
-  const { priceData, stockname } = props
+  const { priceData, name } = props
     const options = {style: 'currency', currency: 'USD'};
     const numberFormat = new Intl.NumberFormat('en-US', options);
     const configPrice = {
@@ -45,7 +44,7 @@ const Chart = (props) => {
         selected: 1
       },
       title: {
-        text: `${stockname} Price Changes`
+        text: `${name} Changes`
       },
       chart: {
         height: 600,

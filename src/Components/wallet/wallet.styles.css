@@ -1,15 +1,21 @@
 .wallet-container {
-    /* width: 150px; */
-    background: white;
-    border: 1px solid #ccc;
-    box-shadow: -2rem 2rem 2rem rgba(0, 0, 0, 0.2);
-    margin: 20px;
-    grid-column: 11/13;
-    /* padding: 10px; */
-    /* position: fixed; */
-
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
   }
   
-  .wallet-container:hover {
+  /* .wallet-container:hover {
     transform: scale(1.05);
+    cursor: pointer;
+  } */
+
+  .wallet-bln {
+    color: white;
+    cursor: pointer;
+  }
+
+  .balanace-btn {
+    display: flex;
   }

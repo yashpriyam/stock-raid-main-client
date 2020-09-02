@@ -1,4 +1,5 @@
 import React from "react"
+import CustomButton from '../../helpers/custom-button/custom-button.component';
 
 const UsersList = ({ users, toggleConnection, connectedTo, connecting }) => {
   return (
@@ -10,7 +11,7 @@ const UsersList = ({ users, toggleConnection, connectedTo, connecting }) => {
             {users.map(({ userName }) => (
               <div key={userName}>
                 <div>
-                  <button
+                  <CustomButton
                     onClick={() => {
                       toggleConnection(userName)
                     }}
@@ -18,9 +19,9 @@ const UsersList = ({ users, toggleConnection, connectedTo, connecting }) => {
                     loading={connectedTo === userName ? connecting : undefined}
                   >
                     {connectedTo === userName ? "Disconnect" : "Connect"}
-                  </button>
+                  </CustomButton>
                 </div>
-                <div>
+                <div className='connected-user-name'>
                   <span>{userName}</span>
                 </div>
               </div>

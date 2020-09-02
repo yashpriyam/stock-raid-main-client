@@ -5,11 +5,11 @@ import CustomButton from '../../helpers/custom-button/custom-button.component';
 
 
 const MoneyAdder = (props) => {
-    const { cancelAdding } = props
+    const { closeModal } = props
     const { userWalletDetails } = useContext(AllStocksContext);
     const [amountToAdd, setAmountToAdd] = useState("");
 
-    console.log(userWalletDetails);
+    // console.log(userWalletDetails);
     const updatedWalletBalance = Number(userWalletDetails.walletBalance) + Number(amountToAdd) >= 0
     ? Number(userWalletDetails.walletBalance) + Number(amountToAdd)
     : 0
@@ -37,7 +37,8 @@ const MoneyAdder = (props) => {
           }
         )
         const walletUpdateJson = await walletUpdate.json();
-        cancelButton();
+        closeModal();
+        // cancelButton();
         // console.log(walletUpdateJson)
       } catch (error) {
         const err = new Error("Transaction failed", 500)
@@ -45,10 +46,10 @@ const MoneyAdder = (props) => {
       }
     }
   
-    const cancelButton = () => {
-      cancelAdding()
-      setAmountToAdd("")
-    }
+    // const cancelButton = () => {
+    //   cancelAdding()
+    //   setAmountToAdd("")
+    // }
     return (
       <form onSubmit={addMoney}>
         <FormInput
@@ -60,8 +61,8 @@ const MoneyAdder = (props) => {
           min={0}
           max={100000000}
         />
-        <CustomButton type="submit">ADD MONEY TO WALLET</CustomButton>
-        <CustomButton onClick={cancelButton}>CANCEL</CustomButton>
+        <CustomButton type="submit">CONFIRM</CustomButton>
+        {/* <CustomButton onClick={cancelButton}>CANCEL</CustomButton> */}
       </form>
     )
   }

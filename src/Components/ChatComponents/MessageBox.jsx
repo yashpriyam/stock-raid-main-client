@@ -1,5 +1,7 @@
 import React from "react"
 import { formatRelative } from "date-fns"
+import CustomButton from "../../helpers/custom-button/custom-button.component"
+import FormInput from '../../helpers/form-input/form-input.component';
 
 const MessageBox = ({
   messages,
@@ -33,15 +35,15 @@ const MessageBox = ({
             No messages available yet
           </div>
         )}
-        <input
+        <FormInput
           type="text"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Type message"
         />
-        <button color="teal" disabled={!message} onClick={sendMsg}>
+        <CustomButton color="teal" disabled={!message} onClick={sendMsg}>
           <span>Send Message</span>
-        </button>
+        </CustomButton>
       </div>
     </div>
   )
