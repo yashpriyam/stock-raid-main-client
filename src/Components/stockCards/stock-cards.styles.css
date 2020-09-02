@@ -19,11 +19,19 @@
     align-items: center;
   }
   .profit {
-    color: green;
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+    background-color: lightgreen;
+    align-items: center;
   }
 
   .loss {
-    color: red;
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+    background-color: red;
+    align-items: center;
   }
 
   .stock-detail-container {

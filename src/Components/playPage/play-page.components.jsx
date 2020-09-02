@@ -20,7 +20,7 @@ const WalletWithSpinner = WithSpinner(Wallet);
 
 
 function PlayPage() {
-  const { userDetails = {username: 'l'}, logOut } = useContext(UserDetailContext)
+  const { userDetails = {}, logOut } = useContext(UserDetailContext)
   const [stockList, setStockList] = useState([])
   const [userStocksList, setUserStocksList] = useState([])
   const [userWalletDetails, setUserWalletDetails] = useState({})
@@ -47,7 +47,7 @@ function PlayPage() {
           "https://stock-raid-basic-server.herokuapp.com/api/stocks"
         )
         allStocksData.onmessage = (e) => {
-          console.log(JSON.parse(e.data))
+          // console.log(JSON.parse(e.data))
           const allStocksJson = JSON.parse(e.data)
           setStockList(allStocksJson.stocks)
         }
@@ -63,10 +63,10 @@ function PlayPage() {
         )
         userStocksData.onmessage = (e) => {
           const userStocksJson = JSON.parse(e.data)
-          console.log(userStocksJson.userStocks)
+          // console.log(userStocksJson.userStocks)
           const userStocksList = userStocksJson.userStocks;
           const currentUserStocks = userStocksList.filter(stock => stock.email === userDetails.email)
-          console.log(currentUserStocks)
+          // console.log(currentUserStocks)
           setUserStocksList(currentUserStocks);
         }
       } catch (error) {
@@ -84,7 +84,7 @@ function PlayPage() {
           const userWalletJson = JSON.parse(e.data)
           const currentUserWallet = userWalletJson.wallet
           const userWallet = currentUserWallet.filter(walletData => walletData.email === userDetails.email)
-          console.log(userWallet)
+          // console.log(userWallet)
           setUserWalletDetails(userWallet[0])
         }
         // const userWalletJson = await userWallet.json();
@@ -137,7 +137,7 @@ function PlayPage() {
         >
           <WalletWithSpinner isLoading={userWalletDetails !== {} ? false : true} />
         </AllStocksContext.Provider>
-        <div className='user-name'>{`Trader: ${userDetails.username}`}</div>
+        {userDetails.username ? <div className='user-name'>{`Trader: ${userDetails.username.toUpperCase()}`}</div> : <SimpleSpinner/>}
         <button className='nav-button' onClick={logOut}>Sign Out</button>
       </div>
       <div className='stock-cards'>
@@ -176,7 +176,7 @@ function PlayPage() {
                 stockList,
               }}
             >
-              <UserStocks key={userStock.id} />
+              {userStock ? <UserStocks key={userStock.id} /> : <SimpleSpinner/>}
             </UserStocksContext.Provider>
           ))}
         </div>

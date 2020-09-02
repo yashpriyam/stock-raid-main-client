@@ -45,7 +45,7 @@ function Wallet() {
   // console.log(walletBalance);
   // console.log(lastBalances);
   // console.log(userWalletDetails.email);
-  console.log(userWalletDetails.lastBalances);
+  // console.log(userWalletDetails.lastBalances);
 
 
   let priceDataArray;

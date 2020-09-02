@@ -91,7 +91,7 @@ function StockCard() {
         <div>{stocksymbol}</div>
       </div>
       <div className='stock-price-container'>Current Price: <span className={stockPriceClass}>${value}</span></div>
-      {!profitLoss ? <SimpleSpinner/> : <div className={profitLoss > 0 ? 'profit' : 'loss'}>{`${profitLoss}`}</div>}
+      {!profitLoss ? <SimpleSpinner/> : <span className={profitLoss > 0 ? 'profit' : 'loss'}>{`${profitLoss}`}</span>}
       <div className='buy-stock-container'>
         <FormInput
           type="number"

@@ -5,6 +5,7 @@ import FormInput from "../../helpers/form-input/form-input.component"
 import CustomButton from "../../helpers/custom-button/custom-button.component"
 import Modal from 'react-modal'
 import "./user-stocks.styles.css"
+import { SimpleSpinner } from "../../helpers/LoadingSpinner/loadingSpinner.component"
 
 function UserStocks() {
   const { userStock, stockList } = useContext(UserStocksContext)
@@ -33,37 +34,36 @@ function UserStocks() {
   const stockBeingSold = stockList.filter(
     (stock) => stock.stockname === userStock.stockName
   )
-  console.log(stockBeingSold[0]);
+  // console.log(stockBeingSold[0]);
 
-  // let percentProfitLoss;
-  // let currentAmount;
-  // useEffect(() => {
-  //   currentAmount = stockBeingSold[0].pershareprice * numberOfStocks;
-  //   if (currentAmount > totalCostOfPurchase) {
-  //     setProfitLoss('profit');
-  //     percentProfitLoss = ((currentAmount - totalCostOfPurchase)/totalCostOfPurchase)*100
-  //   }
-  //   if (currentAmount < totalCostOfPurchase) {
-  //     setProfitLoss('loss')
-  //     percentProfitLoss = ((currentAmount - totalCostOfPurchase)/totalCostOfPurchase)*100
-  //   }
-  //   if (currentAmount === totalCostOfPurchase) {
-  //     setProfitLoss('no-profit-no-loss')
-  //   }
-  // }, [])
-  
-  // console.log(stockBeingSold[0].pershareprice * numberOfStocks);
+  let percentProfitLoss;
+  let currentAmount;
+  useEffect(() => {
+    // console.log(stockBeingSold[0]);
+    if (stockBeingSold[0]) {
+      currentAmount = stockBeingSold[0].pershareprice * numberOfStocks;
+      percentProfitLoss = ((Number(currentAmount) - Number(totalCostOfPurchase))/Number(totalCostOfPurchase))*100
+    }
+    switch (true) {
+      case currentAmount > totalCostOfPurchase:
+        setProfitLoss('profit');
+        break
+      case currentAmount <= totalCostOfPurchase:
+        setProfitLoss('loss')
+        break
+      default:
+        return false;
+    }
+  }, [stockBeingSold])
 
 
   return (
     <div className="card-container">
       <div className='stock-detail-container'>
         <div>{stockName}</div>
-        {/* <div>{stockBeingSold[0].stocksymbol}</div> */}
+        {stockBeingSold[0] ? <div>{stockBeingSold[0].stocksymbol}</div> : <SimpleSpinner/>}
       </div>
-      {/* <div className={`stock-performance ${profitLoss}`}>
-        <div>{`%${percentProfitLoss}`}</div>
-      </div> */}
+  {profitLoss ? <div className={`stock-performance ${profitLoss}`}>{profitLoss === 'profit' ? 'Profiting' : 'Losing'}</div> : <SimpleSpinner/>}
       <div>Number Of Stocks: <span>{userStock.numberOfStocks}</span></div>
       <div>Value Of Stocks: <span>${(totalCostOfPurchase).toFixed(2)}</span></div>
       <div className='buy-stock-container'>

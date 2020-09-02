@@ -17,7 +17,7 @@ const BuyStocks = (props) => {
 
   const purchaseHandler = async (event) => {
     event.preventDefault()
-    console.log("purchase handler")
+    // console.log("purchase handler")
     try {
       const walletUpdate = await fetch(
         `https://stock-raid-basic-server.herokuapp.com/api/wallet/${userDetails.email}`,
@@ -31,9 +31,9 @@ const BuyStocks = (props) => {
           }),
         }
       )
-      console.log("purchase handler2")
+      // console.log("purchase handler2")
       const walletUpdateJson = await walletUpdate.json()
-      console.log(walletUpdateJson)
+      // console.log(walletUpdateJson)
       // console.log(updatedPerSharePrice);
 
       const stockUpdate = await fetch(
@@ -49,9 +49,9 @@ const BuyStocks = (props) => {
           }),
         }
       )
-      console.log("purchase handler3")
+      // console.log("purchase handler3")
       const stockUpdateJson = await stockUpdate.json()
-      console.log(stockUpdateJson)
+      // console.log(stockUpdateJson)
 
       const userStocks = await fetch(
         "https://stock-raid-basic-server.herokuapp.com/api/userStocks",
@@ -69,7 +69,7 @@ const BuyStocks = (props) => {
         }
       )
       const userStocksJson = await userStocks.json()
-      console.log(userStocksJson)
+      // console.log(userStocksJson)
       await closeModal()
     } catch (error) {
       const err = new Error("Transaction failed", 500)
@@ -89,7 +89,9 @@ const BuyStocks = (props) => {
           Click CONFIRM if you you wish to continue
         </h3>
       </div>
+      <span className='buy-confirm' style={{margin: "5px"}}>
       <CustomButton onClick={purchaseHandler}>CONFIRM</CustomButton>
+      </span>
     </>
   )
 }
