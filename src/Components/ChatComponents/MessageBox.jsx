@@ -12,19 +12,17 @@ const MessageBox = ({
   name,
 }) => {
   return (
-    <div>
-      <span>{connectedTo || "Not chatting with anyone currently"}</span>
       <div>
         {!!connectedTo && messages[connectedTo] ? (
-          <div>
+          <div className='msg-box-container'>
             {messages[connectedTo].map(
               ({ name: sender, message: text, time }) => (
-                <div key={`msg-${name}-${time}`}>
-                  <span>{sender === name ? "You" : sender}</span>
-                  <div>
-                    <span>{formatRelative(new Date(time), new Date())}</span>
+                <div key={`msg-${name}-${time}`} className={sender === name ? 'current-user' : 'other-user'}>
+                  {/* <span>{sender === name ? "You" : sender}</span> */}
+                  <div >
+                    <span className='msg-timestamp'>{formatRelative(new Date(time), new Date())}</span>
                   </div>
-                  <span>{text}</span>
+                  <div className='msg-text'><span >{text}</span></div>
                 </div>
               )
             )}
@@ -35,17 +33,18 @@ const MessageBox = ({
             No messages available yet
           </div>
         )}
-        <FormInput
-          type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder="Type message"
-        />
-        <CustomButton color="teal" disabled={!message} onClick={sendMsg}>
-          <span>Send Message</span>
-        </CustomButton>
+        <div className='message-box-button'>
+          <FormInput
+            type="text"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            placeholder="Type message"
+          />
+          <CustomButton color="teal" disabled={!message} onClick={sendMsg}>
+            <span>Send Message</span>
+          </CustomButton>
+        </div>
       </div>
-    </div>
   )
 }
 

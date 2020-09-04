@@ -1,9 +1,11 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef, useContext } from "react"
 import { format } from "date-fns"
 import UsersList from "./UsersList"
 import MessageBox from "./MessageBox"
-import FormInput from "../../helpers/form-input/form-input.component"
-import CustomButton from "../../helpers/custom-button/custom-button.component"
+// import FormInput from "../../helpers/form-input/form-input.component"
+// import CustomButton from "../../helpers/custom-button/custom-button.component"
+// import { SimpleSpinner } from "../../helpers/LoadingSpinner/loadingSpinner.component"
+import UserDetailContext from '../../helpers/contexts/user-detail.contexts';
 // import "../../App.css"
 
 // Use for remote connections
@@ -24,9 +26,11 @@ const Chat = ({ connection, updateConnection, channel, updateChannel }) => {
   const [connecting, setConnecting] = useState(false)
   const [message, setMessage] = useState("")
   const [messages, setMessages] = useState({})
+  const { userDetails } = useContext(UserDetailContext);
   const connectedRef = useRef()
   const webSocket = useRef(null)
   const messagesRef = useRef({})
+
 
   const onAnswer = ({ answer }) => {
     connection.setRemoteDescription(new RTCSessionDescription(answer))
@@ -41,7 +45,7 @@ const Chat = ({ connection, updateConnection, channel, updateChannel }) => {
   const onLogin = ({ success, message, users: loggedIn }) => {
     setLoggingIn(false)
     if (success) {
-      alert("Logged in successfully!")
+      // alert("Logged in successfully!")
       setIsLoggedIn(true)
       setUsers(loggedIn)
       const localConnection = new RTCPeerConnection(configuration)
@@ -95,6 +99,17 @@ const Chat = ({ connection, updateConnection, channel, updateChannel }) => {
     webSocket.current = new WebSocket(
       "wss://stock-raid-chat-server.herokuapp.com/"
     )
+    webSocket.current.onopen = () => {
+      console.log('connection opened')
+      if (userDetails.email) {
+        setLoggingIn(true);
+        setName(userDetails.username)
+        send({
+          type: "login",
+          name: userDetails.username,
+        });
+      }
+    }
     webSocket.current.onmessage = (msg) => {
       const data = JSON.parse(msg.data)
       setSocketMessages((prev) => [...prev, data])
@@ -104,6 +119,7 @@ const Chat = ({ connection, updateConnection, channel, updateChannel }) => {
     }
     return () => webSocket.current.close()
   }, [])
+
 
   useEffect(() => {
     const data = socketMessages.pop()
@@ -140,13 +156,6 @@ const Chat = ({ connection, updateConnection, channel, updateChannel }) => {
     webSocket.current.send(JSON.stringify(data))
   }
 
-  const handleLogin = () => {
-    setLoggingIn(true)
-    send({
-      type: "login",
-      name,
-    })
-  }
 
   const updateUsersList = ({ user }) => {
     setUsers((prev) => [...prev, user])
@@ -234,30 +243,11 @@ const Chat = ({ connection, updateConnection, channel, updateChannel }) => {
       setConnecting(false)
     }
   }
+  
   return (
     <div className="App">
       {socketOpen && (
         <>
-          <div>
-            <div>
-              {(!isLoggedIn && (
-                <>
-                  <FormInput
-                    disabled={loggingIn}
-                    type="text"
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Username"
-                  />
-                  <CustomButton
-                    disabled={!name || loggingIn}
-                    onClick={handleLogin}
-                  >
-                    Login
-                  </CustomButton>
-                </>
-              )) || <div>Logged In as: {name}</div>}
-            </div>
-          </div>
           <div>
             <UsersList
               users={users}
