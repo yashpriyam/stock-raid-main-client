@@ -9,7 +9,7 @@ import UserDetailContext from "../../helpers/contexts/user-detail.contexts"
 import ChannelContext from "../../helpers/contexts/chat-channel.contexts"
 import ConnectionContext from "../../helpers/contexts/chat-connection.contexts"
 import FormInput from "../../helpers/form-input/form-input.component"
-import {WithSpinner, SimpleSpinner} from '../../helpers/LoadingSpinner/loadingSpinner.component';
+import { WithSpinner, SimpleSpinner } from '../../helpers/LoadingSpinner/loadingSpinner.component';
 // import CustomButton from "../../helpers/custom-button/custom-button.component"
 import './play-page.styles.scss'
 
@@ -182,7 +182,7 @@ function PlayPage() {
         </div>
       </div>
       <div className='side-chat'>
-        <ConnectionContext.Provider value={{ connection, updateConnection }}>
+        <ConnectionContext.Provider value={{ connection, updateConnection, userDetails }}>
           <ChannelContext.Provider value={{ channel, updateChannel }}>
             <Container />
           </ChannelContext.Provider>

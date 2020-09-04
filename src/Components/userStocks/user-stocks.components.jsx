@@ -38,22 +38,26 @@ function UserStocks() {
 
   let percentProfitLoss;
   let currentAmount;
+  
   useEffect(() => {
     // console.log(stockBeingSold[0]);
-    if (stockBeingSold[0]) {
-      currentAmount = stockBeingSold[0].pershareprice * numberOfStocks;
-      percentProfitLoss = ((Number(currentAmount) - Number(totalCostOfPurchase))/Number(totalCostOfPurchase))*100
+    const checkProfitLoss = () => {
+      if (stockBeingSold[0]) {
+        currentAmount = stockBeingSold[0].pershareprice * numberOfStocks;
+        percentProfitLoss = ((Number(currentAmount) - Number(totalCostOfPurchase))/Number(totalCostOfPurchase))*100
+      }
+      switch (true) {
+        case currentAmount > totalCostOfPurchase:
+          setProfitLoss('profit');
+          break
+        case currentAmount <= totalCostOfPurchase:
+          setProfitLoss('loss')
+          break
+        default:
+          return false;
+      }
     }
-    switch (true) {
-      case currentAmount > totalCostOfPurchase:
-        setProfitLoss('profit');
-        break
-      case currentAmount <= totalCostOfPurchase:
-        setProfitLoss('loss')
-        break
-      default:
-        return false;
-    }
+    checkProfitLoss()
   }, [stockBeingSold])
 
 

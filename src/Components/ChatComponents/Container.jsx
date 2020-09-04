@@ -8,15 +8,18 @@ import {
 const Container = () => {
   return (
     <ConnectionConsumer>
-      {({ connection, updateConnection }) => (
+      {({ connection, updateConnection, userDetails }) => (
         <ChannelConsumer>
           {({ channel, updateChannel }) => (
-            <Chat
-              connection={connection}
-              updateConnection={updateConnection}
-              channel={channel}
-              updateChannel={updateChannel}
-            />
+            <div className='chat-panel-container'>
+              <Chat
+                connection={connection}
+                updateConnection={updateConnection}
+                channel={channel}
+                updateChannel={updateChannel}
+                userDetails={userDetails}
+              />
+            </div>
           )}
         </ChannelConsumer>
       )}
